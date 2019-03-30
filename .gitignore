@@ -29,7 +29,10 @@
 
 # Android related
 **/android/**/gradle-wrapper.jar
+**/android/**/.classpath
+**/android/**/.project
 **/android/.gradle
+**/android/.settings
 **/android/captures/
 **/android/gradlew
 **/android/gradlew.bat

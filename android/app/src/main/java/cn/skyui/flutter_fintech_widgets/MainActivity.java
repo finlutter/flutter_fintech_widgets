@@ -1,4 +1,4 @@
-package cn.skyui.flutter_practice;
+package cn.skyui.flutter_fintech_widgets;
 
 import android.os.Bundle;
 import io.flutter.app.FlutterActivity;
