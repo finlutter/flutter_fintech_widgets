@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_practice/practice/flutter_candlesticks.dart';
+import '../../practice/flutter_candlesticks.dart';
 
 
 class NewsPage extends StatefulWidget {

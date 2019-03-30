@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_practice/practice/SimpleList.dart';
-import 'package:flutter_practice/practice/AppBarBottomWidget.dart';
-import 'package:flutter_practice/practice/Navigation.dart';
+import '../../practice/SimpleList.dart';
+import '../../practice/AppBarBottomWidget.dart';
+import '../../practice/Navigation.dart';
 
 class MarketPage extends StatefulWidget {
   @override

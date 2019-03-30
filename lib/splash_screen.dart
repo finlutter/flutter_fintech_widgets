@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_practice/constants/constants.dart';
-import 'package:flutter_practice/main_screen.dart';
+import 'constants/constants.dart';
+import 'main_screen.dart';
 
 class SplashPage extends StatefulWidget {
   @override
