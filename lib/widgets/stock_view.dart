@@ -21,15 +21,16 @@ class _StockViewPageState extends State<StockViewPage> {
 
   @override
   void didChangeDependencies() {
-    StockData.loadFromBundle(DefaultAssetBundle.of(context), _symbol).then(
-      (data) { _onDataReady(data); }
-    );
+    StockData.loadFromBundle(DefaultAssetBundle.of(context), _symbol)
+        .then((data) {
+      _onDataReady(data);
+    });
 
     super.didChangeDependencies();
   }
 
   @override
-  Widget build(BuildContext context) {    
+  Widget build(BuildContext context) {
     if (_data != null) {
       return Scaffold(
         appBar: AppBar(
@@ -47,9 +48,7 @@ class _StockViewPageState extends State<StockViewPage> {
           title: Text(_symbol),
         ),
         body: Container(
-          alignment: Alignment.center,
-          child: CircularProgressIndicator()
-        ),
+            alignment: Alignment.center, child: CircularProgressIndicator()),
       );
     }
   }

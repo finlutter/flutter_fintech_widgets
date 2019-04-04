@@ -8,7 +8,6 @@ class SplashPage extends StatefulWidget {
 }
 
 class SplashState extends State<SplashPage> with TickerProviderStateMixin {
-
   Animation animation;
   AnimationController controller;
   AnimationStatusListener animationStatusListener;
@@ -19,19 +18,16 @@ class SplashState extends State<SplashPage> with TickerProviderStateMixin {
 
     // 动画管理器
     controller = new AnimationController(
-        duration: new Duration(milliseconds: 1500),
-        vsync: this
-    );
+        duration: new Duration(milliseconds: 1500), vsync: this);
 
     // 动画
     animation = Tween(begin: 1.0, end: 0.5).animate(controller);
 
     animationStatusListener = (status) {
-      if(status == AnimationStatus.completed) {
+      if (status == AnimationStatus.completed) {
         Navigator.of(context).pushAndRemoveUntil(
             MaterialPageRoute(builder: (context) => MainPage()),
-                (router) => router == null
-        );
+            (router) => router == null);
       }
     };
 
@@ -59,5 +55,4 @@ class SplashState extends State<SplashPage> with TickerProviderStateMixin {
     controller.dispose();
     super.dispose();
   }
-
 }

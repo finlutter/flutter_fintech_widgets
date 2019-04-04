@@ -20,20 +20,19 @@ class CandleSticksPainterConfig {
   // where the canvas to draw in x-axis.
   double viewOffset;
 
-  CandleSticksPainterConfig({
-    double candleWidth,
-    double candleMargin,
-    double shadowStrokeWidth,
-    Color upColor,
-    Color downColor,
-    double viewOffset
-  }) :
-    candleWidth = 15.0,
-    candleMargin = 1.0,
-    shadowStrokeWidth = 2.0,
-    upColor = Colors.red,
-    downColor = Colors.green,
-    viewOffset = 0.0;
+  CandleSticksPainterConfig(
+      {double candleWidth,
+      double candleMargin,
+      double shadowStrokeWidth,
+      Color upColor,
+      Color downColor,
+      double viewOffset})
+      : candleWidth = 15.0,
+        candleMargin = 1.0,
+        shadowStrokeWidth = 2.0,
+        upColor = Colors.red,
+        downColor = Colors.green,
+        viewOffset = 0.0;
 }
 
 class CandleStickPainter extends CustomPainter {
@@ -46,7 +45,8 @@ class CandleStickPainter extends CustomPainter {
   void paint(Canvas canvas, Size size) {
     // calculate which is the first and last item to draw.
     double extendWidth = _config.candleWidth + _config.candleMargin * 2;
-    int start = ((_config.viewOffset + _config.candleMargin) / extendWidth).floor();
+    int start =
+        ((_config.viewOffset + _config.candleMargin) / extendWidth).floor();
     int end = ((_config.viewOffset + size.width) / extendWidth).ceil();
 
     // calculate which is the base price.
@@ -68,9 +68,9 @@ class CandleStickPainter extends CustomPainter {
 
       double itemHeight;
       double itemTop;
-      
+
       Paint paint = Paint();
-      
+
       // draw candle
       if (item.open > item.close) {
         // a candle for down
@@ -84,7 +84,8 @@ class CandleStickPainter extends CustomPainter {
         itemTop = (highestPrice - item.close) / fraction;
       }
 
-      double itemLeft = extendWidth * i + _config.candleMargin - _config.viewOffset;
+      double itemLeft =
+          extendWidth * i + _config.candleMargin - _config.viewOffset;
       double itemWidth = _config.candleWidth;
       Rect itemRect = Rect.fromLTWH(itemLeft, itemTop, itemWidth, itemHeight);
 
@@ -94,11 +95,8 @@ class CandleStickPainter extends CustomPainter {
           continue;
         }
         // assert((itemLeft + _config.candleWidth > 0));
-        itemRect = Rect.fromLTWH(0,
-          itemTop,
-          _config.candleWidth + itemLeft,
-          itemHeight
-        );
+        itemRect = Rect.fromLTWH(
+            0, itemTop, _config.candleWidth + itemLeft, itemHeight);
       }
       if (itemLeft + _config.candleWidth > size.width) {
         if (itemLeft >= size.width) {
@@ -106,11 +104,8 @@ class CandleStickPainter extends CustomPainter {
           continue;
         }
         // assert((itemLeft < size.width));
-        itemRect = Rect.fromLTWH(itemLeft,
-          itemTop,
-          size.width - itemLeft,
-          itemHeight
-        );
+        itemRect =
+            Rect.fromLTWH(itemLeft, itemTop, size.width - itemLeft, itemHeight);
       }
 
       canvas.drawRect(itemRect, paint);
@@ -120,18 +115,12 @@ class CandleStickPainter extends CustomPainter {
 
       double shadowX = itemLeft + _config.candleWidth / 2;
       if (shadowX > 0 && shadowX < size.width) {
-        Offset lineStart = Offset(
-          shadowX,
-          (highestPrice - item.high) / fraction
-        );
-        Offset lineEnd = Offset(
-          shadowX,
-          (highestPrice - item.low) / fraction
-        );
+        Offset lineStart =
+            Offset(shadowX, (highestPrice - item.high) / fraction);
+        Offset lineEnd = Offset(shadowX, (highestPrice - item.low) / fraction);
 
         canvas.drawLine(lineStart, lineEnd, paint);
       }
-      
     }
   }
 
@@ -139,5 +128,4 @@ class CandleStickPainter extends CustomPainter {
   bool shouldRepaint(CustomPainter oldDelegate) {
     return true;
   }
-
 }

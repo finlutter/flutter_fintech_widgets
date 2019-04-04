@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
 class SecondScreen extends StatelessWidget {
-
   @override
   Widget build(BuildContext context) {
     return new Scaffold(
@@ -9,14 +8,12 @@ class SecondScreen extends StatelessWidget {
         title: new Text("Second Page"),
       ),
       body: new Center(
-        child: new RaisedButton(
-          onPressed: (){
-            Navigator.pop(context);
-          },
-          child: new Text("Go Back"),
-        )
-      ),
+          child: new RaisedButton(
+        onPressed: () {
+          Navigator.pop(context);
+        },
+        child: new Text("Go Back"),
+      )),
     );
   }
-
 }

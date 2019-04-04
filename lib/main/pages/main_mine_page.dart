@@ -26,8 +26,7 @@ class _MinePageState extends State<MinePage>
           child: AppBar(
             title: Text('我的'),
           ),
-          preferredSize: Size.fromHeight(48.0)
-      ),
+          preferredSize: Size.fromHeight(48.0)),
       body: new Center(
         child: new Column(
           mainAxisAlignment: MainAxisAlignment.center,

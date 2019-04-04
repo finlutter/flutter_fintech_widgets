@@ -5,7 +5,6 @@ class CarouselView extends StatefulWidget {
   State<StatefulWidget> createState() {
     return _CarouselViewState();
   }
-
 }
 
 class _CarouselViewState extends State<CarouselView> {
@@ -15,5 +14,4 @@ class _CarouselViewState extends State<CarouselView> {
       fallbackHeight: 100,
     );
   }
-
 }

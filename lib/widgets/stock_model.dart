@@ -25,6 +25,7 @@ class StockData {
   static StockData getBySourcePath(String path) {
     return dataSet[path];
   }
+
   static StockData getBySymbol(String symbol) {
     StockData data;
     dataSet.forEach((key, value) {
@@ -36,20 +37,19 @@ class StockData {
     return data;
   }
 
-  static
-  Future<StockData> loadFromBundle(AssetBundle bundle, String symbol) {
+  static Future<StockData> loadFromBundle(AssetBundle bundle, String symbol) {
     String path = "stocks/" + symbol + "/k_day.json";
     StockData stockData = StockData.getBySourcePath(path);
-    
+
     if (stockData == null) {
       Completer<StockData> completer = Completer<StockData>();
 
-      bundle.loadString(path).then((jsonString){
+      bundle.loadString(path).then((jsonString) {
         Map<String, dynamic> jsonMap = json.decode(jsonString);
         stockData = StockData.fromJson(jsonMap);
         StockData.dataSet[path] = stockData;
 
-        completer.complete(stockData);    
+        completer.complete(stockData);
       });
 
       return completer.future;
