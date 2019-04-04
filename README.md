@@ -1,3 +1,8 @@
+
+![](https://api.cirrus-ci.com/github/finlutter/flutter_fintech_widgets.svg?task=format)
+![](https://api.cirrus-ci.com/github/finlutter/flutter_fintech_widgets.svg?task=build)
+![](https://api.cirrus-ci.com/github/finlutter/flutter_fintech_widgets.svg?task=test)
+
 ## 环境配置
 
 #### 下载
