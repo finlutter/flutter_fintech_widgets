@@ -11,9 +11,12 @@ class MarketPage extends StatefulWidget {
 // TabController + TabBar + TabBarView
 class _MarketPageState extends State<MarketPage>
     with AutomaticKeepAliveClientMixin {
-
-  final List<String> _allTabs  = ['沪深', '港股', '美股'];
-  final List<Widget> _allPages = [SimpleListView(), Navigation(), AppBarBottom()];
+  final List<String> _allTabs = ['沪深', '港股', '美股'];
+  final List<Widget> _allPages = [
+    SimpleListView(),
+    Navigation(),
+    AppBarBottom()
+  ];
 
   @override
   bool get wantKeepAlive => true;
@@ -49,13 +52,11 @@ class _MarketPageState extends State<MarketPage>
                   tabs: _allTabs.map((name) => new Tab(text: name)).toList(),
                 ),
               ),
-              preferredSize: Size.fromHeight(48.0)
-          ),
+              preferredSize: Size.fromHeight(48.0)),
           body: new TabBarView(
               children: _allTabs.map((name) {
-                return _allPages[_allTabs.indexOf(name)];
-              }).toList()),
-        )
-    );
+            return _allPages[_allTabs.indexOf(name)];
+          }).toList()),
+        ));
   }
 }

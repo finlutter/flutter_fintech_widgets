@@ -24,9 +24,18 @@ class MainNavigation extends StatefulWidget {
 
 class _MainNavigationState extends State<MainNavigation>
     with SingleTickerProviderStateMixin {
-
-  final List<Widget> _tabPages = [HomePage(), MarketPage(), NewsPage(), MinePage()];
-  final List<IconData> _tabIcons = [Icons.home, Icons.favorite, Icons.comment, Icons.person];
+  final List<Widget> _tabPages = [
+    HomePage(),
+    MarketPage(),
+    NewsPage(),
+    MinePage()
+  ];
+  final List<IconData> _tabIcons = [
+    Icons.home,
+    Icons.favorite,
+    Icons.comment,
+    Icons.person
+  ];
   final List<String> _tabNames = ['首页', '行情', '资讯', '我的'];
 
   int _currentIndex = 0;
@@ -62,8 +71,7 @@ class _MainNavigationState extends State<MainNavigation>
           type: BottomNavigationBarType.fixed,
           items: _tabIcons.map((name) {
             return _buildItem(_tabIcons.indexOf(name));
-          }).toList()
-      ),
+          }).toList()),
     );
   }
 
@@ -83,6 +91,8 @@ class _MainNavigationState extends State<MainNavigation>
   }
 
   Color _tabColor(int index) {
-    return _currentIndex == index ? Theme.of(context).primaryColor : Colors.grey;
+    return _currentIndex == index
+        ? Theme.of(context).primaryColor
+        : Colors.grey;
   }
 }

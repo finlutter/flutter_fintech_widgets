@@ -4,7 +4,6 @@ import '../../widgets/icon_board_view.dart';
 import '../../widgets/pinned_page_view.dart';
 
 class HomePage extends StatelessWidget {
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -13,13 +12,8 @@ class HomePage extends StatelessWidget {
       ),
       body: ListView(
         scrollDirection: Axis.vertical,
-        children: <Widget>[
-          CarouselView(),
-          IconBoardView(),
-          PinnedPageView()
-        ],
+        children: <Widget>[CarouselView(), IconBoardView(), PinnedPageView()],
       ),
     );
   }
 }
-
