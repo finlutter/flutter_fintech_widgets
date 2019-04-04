@@ -1,8 +1,10 @@
 container:
   image: cirrusci/flutter:latest
 
+build_task:
+  script: flutter build aot
+
 test_task:
   pub_cache:
     folder: ~/.pub-cache
-  build_aot: flutter build aot
   test_script: flutter test
