@@ -12,7 +12,6 @@ class CandleSticksView extends StatefulWidget {
   State<CandleSticksView> createState() {
     return _CandleStickViewState(_data);
   }
-
 }
 
 class _CandleStickViewState extends State<CandleSticksView> {
@@ -23,7 +22,9 @@ class _CandleStickViewState extends State<CandleSticksView> {
 
   _CandleStickViewState(this._data) {
     _painterConfig = CandleSticksPainterConfig();
-    _virtualWidth = (_painterConfig.candleWidth + _painterConfig.candleMargin * 2) * _data.items.length;
+    _virtualWidth =
+        (_painterConfig.candleWidth + _painterConfig.candleMargin * 2) *
+            _data.items.length;
   }
 
   void _onDragUpdate(double offset) {
@@ -45,7 +46,7 @@ class _CandleStickViewState extends State<CandleSticksView> {
 
   @override
   Widget build(BuildContext context) {
-    return ConstrainedBox (
+    return ConstrainedBox(
       constraints: BoxConstraints.loose(
         Size(double.infinity, 500),
       ),
@@ -58,8 +59,8 @@ class _CandleStickViewState extends State<CandleSticksView> {
         // onHorizontalDragStart: (DragStartDetails details) => {
         //   debugPrint("Drag Start: ${details}")
         // },
-        onHorizontalDragUpdate: (DragUpdateDetails details) => {
-          _onDragUpdate(details.primaryDelta)
+        onHorizontalDragUpdate: (DragUpdateDetails details) {
+          _onDragUpdate(details.primaryDelta);
         },
         // onHorizontalDragEnd: (DragEndDetails details) => {
         //   debugPrint("Drag End: ${details}")
@@ -74,4 +75,3 @@ class _CandleStickViewState extends State<CandleSticksView> {
     );
   }
 }
-
