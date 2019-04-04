@@ -1,6 +1,9 @@
 container:
   image: cirrusci/flutter:latest
 
+format_task:
+  script: find lib -name "*.dart" -exec flutter format -n --set-exit-if-changed {} \;
+
 build_task:
   script: flutter build aot
 
