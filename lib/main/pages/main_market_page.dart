@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../../practice/SimpleList.dart';
+import '../../practice/stock_list.dart';
 import '../../practice/AppBarBottomWidget.dart';
 import '../../practice/Navigation.dart';
 

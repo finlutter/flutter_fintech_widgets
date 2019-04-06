@@ -1,46 +1,47 @@
 import 'package:flutter/material.dart';
 import 'candlestick_painter.dart';
-import 'stock_model.dart';
+import '../stock/model.dart';
 
 class CandleSticksView extends StatefulWidget {
-  final StockData _data;
+  final Stock stock;
   final Size _viewSize;
 
-  CandleSticksView(this._data, this._viewSize);
+  CandleSticksView(this.stock, this._viewSize);
 
   @override
   State<CandleSticksView> createState() {
-    return _CandleStickViewState(_data);
+    return _CandleStickViewState();
   }
 }
 
 class _CandleStickViewState extends State<CandleSticksView> {
-  StockData _data;
-  CandleSticksPainterConfig _painterConfig;
+  CandleSticksPainterConfig painterConfig = CandleSticksPainterConfig();
 
-  double _virtualWidth;
+  double virtualWidth;
 
-  _CandleStickViewState(this._data) {
-    _painterConfig = CandleSticksPainterConfig();
-    _virtualWidth =
-        (_painterConfig.candleWidth + _painterConfig.candleMargin * 2) *
-            _data.items.length;
+  @override
+  void initState() {
+    super.initState();
+
+    virtualWidth =
+        (painterConfig.candleWidth + painterConfig.candleMargin * 2) *
+            widget.stock.items.length;
   }
 
-  void _onDragUpdate(double offset) {
+  void onDragUpdate(double offset) {
     // debugPrint(offset.toString());
     setState(() {
-      double newOffset = _painterConfig.viewOffset - offset;
+      double newOffset = painterConfig.viewOffset - offset;
 
       if (newOffset < 0) {
         newOffset = 0;
       }
 
-      if (newOffset > _virtualWidth - widget._viewSize.width) {
-        newOffset = _virtualWidth - widget._viewSize.width;
+      if (newOffset > virtualWidth - widget._viewSize.width) {
+        newOffset = virtualWidth - widget._viewSize.width;
       }
 
-      _painterConfig.viewOffset = newOffset;
+      painterConfig.viewOffset = newOffset;
     });
   }
 
@@ -52,7 +53,7 @@ class _CandleStickViewState extends State<CandleSticksView> {
       ),
       child: GestureDetector(
         child: CustomPaint(
-          painter: CandleStickPainter(_data, _painterConfig),
+          painter: CandleStickPainter(widget.stock, painterConfig),
           size: widget._viewSize,
         ),
 
@@ -60,7 +61,7 @@ class _CandleStickViewState extends State<CandleSticksView> {
         //   debugPrint("Drag Start: ${details}")
         // },
         onHorizontalDragUpdate: (DragUpdateDetails details) {
-          _onDragUpdate(details.primaryDelta);
+          onDragUpdate(details.primaryDelta);
         },
         // onHorizontalDragEnd: (DragEndDetails details) => {
         //   debugPrint("Drag End: ${details}")
