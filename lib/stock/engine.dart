@@ -37,7 +37,7 @@ class NetworkEngine {
         completer.complete(
             NetworkEngine(httpClient: httpClient, fileCache: fileCache));
       }, onError: completer.completeError);
-      
+
       _instance = completer.future;
     }
     return _instance;
