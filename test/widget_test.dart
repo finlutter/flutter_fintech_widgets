@@ -23,10 +23,10 @@ void main() {
     await tester.pump();
 
     // Verify that our counter has incremented.
-    expect(find.text('Item 0'), findsOneWidget);
-    expect(find.text('Item 1'), findsOneWidget);
+    expect(find.text('浦发银行'), findsOneWidget);
+    expect(find.text('东安动力'), findsOneWidget);
 
-    await tester.tap(find.text('Item 2'));
+    await tester.tap(find.text('浦发银行'));
     await tester.pump();
   });
 }
