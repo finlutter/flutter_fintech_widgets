@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'constants/constants.dart';
 import 'main_screen.dart';
 
 class SplashPage extends StatefulWidget {
@@ -43,7 +42,7 @@ class SplashState extends State<SplashPage> with TickerProviderStateMixin {
     return FadeTransition(
       opacity: animation,
       child: Image.asset(
-        splashBackgroundImage,
+        'assets/images/splash_bg.jpg',
         fit: BoxFit.fill,
       ),
     );

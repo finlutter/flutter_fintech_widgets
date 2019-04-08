@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'stock_model.dart';
+
+import '../stock/model.dart';
 
 class CandleSticksPainterConfig {
   // width of each candle, in points.
@@ -36,7 +37,7 @@ class CandleSticksPainterConfig {
 }
 
 class CandleStickPainter extends CustomPainter {
-  StockData _data;
+  Stock _data;
   CandleSticksPainterConfig _config;
 
   CandleStickPainter(this._data, this._config);
@@ -54,7 +55,7 @@ class CandleStickPainter extends CustomPainter {
     double highestPrice = 0;
 
     for (int i = start; i < end; i++) {
-      StockDataItem x = _data.items[i];
+      Bar x = _data.items[i];
       if (x.high > highestPrice) highestPrice = x.high;
       if (x.low < lowestPrice) lowestPrice = x.low;
     }
@@ -64,7 +65,7 @@ class CandleStickPainter extends CustomPainter {
 
     // draw candles and shadows
     for (int i = start; i < end; i++) {
-      StockDataItem item = _data.items[i];
+      Bar item = _data.items[i];
 
       double itemHeight;
       double itemTop;
