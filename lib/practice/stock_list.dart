@@ -5,6 +5,7 @@ class SimpleListView extends StatelessWidget {
   final List<Map> items = [
     {'symbol': 'sh600000', 'name': '浦发银行'},
     {'symbol': 'sh600178', 'name': '东安动力'},
+    {'symbol': 'sh600178', 'name': '东安动力'},
     {'symbol': 'sh600748', 'name': '上实发展'},
     {'symbol': 'sh000001', 'name': '上证指数'},
     {'symbol': 'sh300333', 'name': '兆日科技'},
