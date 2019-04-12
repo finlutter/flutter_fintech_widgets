@@ -1,10 +1,45 @@
 import 'package:flutter/material.dart';
 
-abstract class StockTableData {
-  String get pageTitle;
-  String get primaryHeaderText;
-  List<String> get columns;
-  Map<String, List<String>> get items;
+abstract class StockTableDeletgate {
+  const StockTableDeletgate();
+
+  int get numColumns;
+  int get numRows;
+  
+  Widget createHeaderCell(int columnIndex);
+  Widget createCell(int rowIndex, int columnIndex);
+}
+
+class DummyStockTableDelegate extends StockTableDeletgate {
+  final int numColumns;
+  final int numRows;
+
+  const DummyStockTableDelegate({
+    this.numColumns = 6,
+    this.numRows = 40
+  });
+
+  @override
+  Widget createCell(int rowIndex, int columnIndex) {
+    return Container(
+      height: 48.0,
+      width: 148.0,
+      alignment: Alignment.center,
+      color: rowIndex.isEven ? Colors.blueGrey[200] : Colors.white,
+      child: Text('$rowIndex : $columnIndex'),
+    );
+  }
+
+  @override
+  Widget createHeaderCell(int columnIndex) {
+    return Container(
+      height: 48.0,
+      width: 148.0,
+      alignment: Alignment.center,
+      color: Colors.green[100 * (columnIndex % 9)],
+      child: Text('Column $columnIndex'),
+    );
+  }
 }
 
 class StockTableMetrics {
@@ -30,27 +65,27 @@ class StockTableMetrics {
   });
 }
 
-class StockTableViewPage extends StatefulWidget {
-  final StockTableData data;
+class StockTableView extends StatefulWidget {
+  final StockTableDeletgate delegate;
   final StockTableMetrics metrics;
 
-  StockTableViewPage({
-    this.data,
+  StockTableView({
+    this.delegate = const DummyStockTableDelegate(),
     this.metrics = const StockTableMetrics()
   });
 
   @override
   State<StatefulWidget> createState() {
-    return _StockTableViewPageState();
+    return _StockTableViewState();
   }
 }
 
-class _StockTableViewPageState extends State<StockTableViewPage> {
+class _StockTableViewState extends State<StockTableView> {
   final ScrollController _headerScrollController = ScrollController();
   final ScrollController _gridScrollController = ScrollController();
   
   List<TableRow> _generateGridRows() {
-    return List<TableRow>.generate(40, (index) {
+    return List<TableRow>.generate(widget.delegate.numRows, (index) {
       return TableRow(
         children: _generateGridCells(index),
       );
@@ -58,50 +93,27 @@ class _StockTableViewPageState extends State<StockTableViewPage> {
   }
 
   List<Widget> _generateGridCells(int row) {
-    return List<Widget>.generate(5, (index) {
-      return Container(
-        height: 48.0,
-        width: 148.0,
-        alignment: Alignment.center,
-        color: row.isEven ? Colors.blueGrey[200] : Colors.white,
-        child: Text('$row : $index'),
-      );
+    return List<Widget>.generate(widget.delegate.numColumns - 1, (index) {
+      return widget.delegate.createCell(row, index + 1);
     });
   }
 
   List<Widget> _generatePrimaryCells() {
-    return List<Widget>.generate(40, (int index) {
-      return Container(
-        height: 48.0,
-        width: 148.0,
-        alignment: Alignment.center,
-        color: Colors.lightBlue[100 * (index % 9)],
-        child: Text('list item $index'),
-      );
+    return List<Widget>.generate(widget.delegate.numRows, (int index) {
+      return widget.delegate.createCell(index, 0);
     });
   }
 
   List<Widget> _generateHeaderCells() {
-    return List<Widget>.generate(5, (index) {
-      return Container(
-        height: 48.0,
-        width: 148.0,
-        alignment: Alignment.center,
-        color: Colors.green[100 * (index % 9)],
-        child: Text('Column $index'),
-      );
+    return List<Widget>.generate(widget.delegate.numColumns - 1, (index) {
+      return widget.delegate.createHeaderCell(index + 1);
     });
   }
 
   Widget _makeHeader() {
     return Row(
       children: <Widget>[
-        Container(
-          height: 48.0,
-          width: 148.0,
-          alignment: Alignment.center,
-          child: Text('name / code'),
-        ),
+        widget.delegate.createHeaderCell(0),
         Expanded(
           child: SingleChildScrollView(
             controller: _headerScrollController,
@@ -152,16 +164,11 @@ class _StockTableViewPageState extends State<StockTableViewPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text("Stocks Table"),
-      ),
-      body: Column(
-        children: <Widget>[
-          _makeHeader(),
-          _makeBody(),
-        ],
-      ),
+    return Column(
+      children: <Widget>[
+        _makeHeader(),
+        _makeBody(),
+      ],
     );
   }
 }
