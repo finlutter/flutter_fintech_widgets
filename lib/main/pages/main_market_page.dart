@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../../practice/stock_list.dart';
+import '../../widgets/stock_table.dart';
 import '../../practice/AppBarBottomWidget.dart';
 import '../../practice/Navigation.dart';
 
@@ -13,7 +13,7 @@ class _MarketPageState extends State<MarketPage>
     with AutomaticKeepAliveClientMixin {
   final List<String> _allTabs = ['沪深', '港股', '美股'];
   final List<Widget> _allPages = [
-    SimpleListView(),
+    StockTableViewPage(),
     Navigation(),
     AppBarBottom()
   ];
