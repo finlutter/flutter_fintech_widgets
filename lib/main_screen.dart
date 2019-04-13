@@ -1,14 +1,17 @@
 import 'package:flutter/material.dart';
+
 import './main/pages/main_home_page.dart';
 import './main/pages/main_market_page.dart';
 import './main/pages/main_news_page.dart';
 import './main/pages/main_mine_page.dart';
+import 'futures/market_page.dart' as futures;
 
 class MainPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return new MaterialApp(
-      title: 'Flutter bottomNavigationBar',
+    // TODO: move MaterialApp outside
+    return MaterialApp(
+      title: 'Flutter Fintech Widgets',
       home: MainNavigation(),
       theme: ThemeData(
         primarySwatch: Colors.green,
@@ -22,77 +25,77 @@ class MainNavigation extends StatefulWidget {
   _MainNavigationState createState() => _MainNavigationState();
 }
 
+class _Item {
+  const _Item({this.name, this.icon, this.builder});
+  final String name;
+  final IconData icon;
+  final WidgetBuilder builder;
+}
+
 class _MainNavigationState extends State<MainNavigation>
     with SingleTickerProviderStateMixin {
-  final List<Widget> _tabPages = [
-    HomePage(),
-    MarketPage(),
-    NewsPage(),
-    MinePage()
+  final List<_Item> pages = <_Item>[
+    _Item(
+        name: '首页',
+        icon: Icons.home,
+        builder: (BuildContext context) => HomePage()),
+    _Item(
+        name: '期货行情',
+        icon: Icons.money_off,
+        builder: (BuildContext context) => futures.MarketPage()),
+    _Item(
+        name: '股票行情',
+        icon: Icons.favorite,
+        builder: (BuildContext context) => MarketPage()),
+    _Item(
+        name: '资讯',
+        icon: Icons.info,
+        builder: (BuildContext context) => NewsPage()),
+    _Item(
+        name: '我的',
+        icon: Icons.settings,
+        builder: (BuildContext context) => MinePage()),
   ];
-  final List<IconData> _tabIcons = [
-    Icons.home,
-    Icons.favorite,
-    Icons.comment,
-    Icons.person
-  ];
-  final List<String> _tabNames = ['首页', '行情', '资讯', '我的'];
 
-  int _currentIndex = 0;
-  var _controller = PageController(
-    initialPage: 0,
-  );
+  int currentIndex = 0;
+  var controller = PageController(initialPage: 0);
 
   @override
   void dispose() {
     super.dispose();
-    _controller.dispose();
+    controller.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: PageView(
-        controller: _controller,
-        children: _tabPages,
+      body: PageView.builder(
+        controller: controller,
+        itemBuilder: (BuildContext context, int index) =>
+            pages[index].builder(context),
         physics: NeverScrollableScrollPhysics(),
       ),
       bottomNavigationBar: BottomNavigationBar(
-          currentIndex: _currentIndex,
-//          onTap: (index)=> _controller.animateToPage(index, duration: Duration(milliseconds: 500), curve: Curves.fastOutSlowIn),
+          currentIndex: currentIndex,
           onTap: (index) {
-            _controller.jumpToPage(index);
+            controller.jumpToPage(index);
             setState(() {
-              _currentIndex = index;
+              currentIndex = index;
             });
           },
           iconSize: 22,
           fixedColor: Theme.of(context).primaryColor,
           type: BottomNavigationBarType.fixed,
-          items: _tabIcons.map((name) {
-            return _buildItem(_tabIcons.indexOf(name));
+          items: pages.map((item) {
+            return _buildItem(item);
           }).toList()),
     );
   }
 
-  BottomNavigationBarItem _buildItem(int index) {
+  BottomNavigationBarItem _buildItem(_Item item) {
     return BottomNavigationBarItem(
-      icon: _tabIcon(index),
-      title: _tabText(index),
+      icon: Icon(item.icon),
+      title: Text(item.name),
     );
-  }
-
-  Icon _tabIcon(int index) {
-    return new Icon(_tabIcons[index], color: _tabColor(index));
-  }
-
-  Text _tabText(int index) {
-    return new Text(_tabNames[index], style: TextStyle(fontSize: 11));
-  }
-
-  Color _tabColor(int index) {
-    return _currentIndex == index
-        ? Theme.of(context).primaryColor
-        : Colors.grey;
   }
 }
