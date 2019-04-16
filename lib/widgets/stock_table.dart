@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 
-typedef Function StockTableDelegateOnTap(int rowIndex);
+typedef Function StockTableDelegateOnTap(
+  BuildContext contet,
+  int rowIndex
+);
 
 abstract class StockTableDeletgate {
   const StockTableDeletgate();
@@ -10,8 +13,6 @@ abstract class StockTableDeletgate {
   
   Widget createHeaderCell(BuildContext context, int columnIndex, StockTableView tableView);
   Widget createCell(BuildContext context, int rowIndex, int columnIndex, StockTableView tableView);
-
-  void onTap(BuildContext context, int rowIndex);
 }
 
 class DummyStockTableDelegate extends StockTableDeletgate {
@@ -59,22 +60,19 @@ class DummyStockTableDelegate extends StockTableDeletgate {
       child: Text('Column $columnIndex'),
     );
   }
-
-  @override
-  void onTap(BuildContext context, int rowIndex) {
-    debugPrint("Tap on row $rowIndex");
-  }
 }
 
 class ItemListStockTableDelegate extends StockTableDeletgate {
   final List<String> _headerNames = List<String>();
   final List<String> _headerKeys = List<String>();
   final List<List<String>> _rows = List<List<String>>();
+  final StockTableDelegateOnTap onTap;
 
   ItemListStockTableDelegate({
     List<Map<String, String>> data,
     String primaryKey,
     Map<String, String> headerMap,
+    this.onTap,
   }):
   assert(data != null),
   assert(primaryKey != null),
@@ -120,12 +118,20 @@ class ItemListStockTableDelegate extends StockTableDeletgate {
       }
     }
 
-    return Container(
-      height: tableView.metrics.itemHeight,
-      width: tableView.metrics.itemWidth,
-      alignment: Alignment.center,
-      color: rowIndex.isEven ? Colors.blueGrey[200] : Colors.white,
-      child: Text(cellText),
+    return GestureDetector(
+      child: Container(
+        height: tableView.metrics.itemHeight,
+        width: tableView.metrics.itemWidth,
+        alignment: Alignment.center,
+        color: rowIndex.isEven ? Colors.blueGrey[200] : Colors.white,
+        child: Text(cellText),
+      ),
+      onTap: () {
+        debugPrint("Tap on row $rowIndex");
+        if (onTap != null) {
+          onTap(context, rowIndex);
+        }
+      },
     );
   }
 
@@ -161,12 +167,6 @@ class ItemListStockTableDelegate extends StockTableDeletgate {
 
   @override
   int get numRows => _rows.length;
-
-  @override
-  void onTap(BuildContext context, int rowIndex) {
-    // TODO: implement onTap
-  }
-
 }
 
 class StockTableMetrics {

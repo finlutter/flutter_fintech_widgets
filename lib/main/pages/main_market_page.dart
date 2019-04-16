@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../../widgets/stock_table.dart';
+import '../../widgets/stock_view.dart';
 import '../../practice/AppBarBottomWidget.dart';
 import '../../practice/Navigation.dart';
 
@@ -47,6 +48,13 @@ class _MarketPageState extends State<MarketPage>
         data: sampleItemList,
         primaryKey: "symbol",
         headerMap: sampleHeaderMap,
+        onTap: (context, row) {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (context) =>
+                    StockViewPage("${sampleItemList[row]['symbol']}")));
+        },
       ),
     ),
     Navigation(),
