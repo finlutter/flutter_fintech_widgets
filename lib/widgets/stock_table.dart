@@ -1,9 +1,6 @@
 import 'package:flutter/material.dart';
 
-typedef Function StockTableDelegateOnTap(
-  BuildContext contet,
-  int rowIndex
-);
+typedef Function StockTableDelegateOnTap(BuildContext contet, int rowIndex);
 
 // Base interface for delegation of StockTableView
 abstract class StockTableDeletgate {
@@ -11,9 +8,18 @@ abstract class StockTableDeletgate {
 
   int get numColumns;
   int get numRows;
-  
-  Widget createHeaderCell(BuildContext context, int columnIndex, StockTableView tableView);
-  Widget createCell(BuildContext context, int rowIndex, int columnIndex, StockTableView tableView);
+
+  Widget createHeaderCell(
+    BuildContext context,
+    int columnIndex,
+    StockTableView tableView,
+  );
+  Widget createCell(
+    BuildContext context,
+    int rowIndex,
+    int columnIndex,
+    StockTableView tableView,
+  );
 }
 
 // A more specific delegation, caller could provide a
@@ -32,11 +38,9 @@ class ItemListStockTableDelegate extends StockTableDeletgate {
     String primaryKey,
     Map<String, String> headerMap,
     this.onTap,
-  }):
-  assert(data != null),
-  assert(primaryKey != null),
-  assert(headerMap != null)
-  {
+  })  : assert(data != null),
+        assert(primaryKey != null),
+        assert(headerMap != null) {
     _headerNames.add(headerMap[primaryKey]);
     _headerKeys.add(primaryKey);
     headerMap.forEach((k, v) {
@@ -63,8 +67,8 @@ class ItemListStockTableDelegate extends StockTableDeletgate {
     BuildContext context,
     int rowIndex,
     int columnIndex,
-    StockTableView tableView)
-  {
+    StockTableView tableView,
+  ) {
     assert(tableView != null);
     assert(rowIndex >= 0);
     assert(columnIndex >= 0);
@@ -97,7 +101,7 @@ class ItemListStockTableDelegate extends StockTableDeletgate {
   Widget createHeaderCell(
     BuildContext context,
     int columnIndex,
-    StockTableView tableView
+    StockTableView tableView,
   ) {
     assert(tableView != null);
     assert(columnIndex >= 0);
@@ -148,7 +152,7 @@ class StockTableMetrics {
     this.headerWidth = defaultHeaderWidth,
     this.itemHeight = defaultItemHeight,
     this.primaryItemWidth = defaultItemWidth,
-    this.itemWidth = defaultItemWidth
+    this.itemWidth = defaultItemWidth,
   });
 }
 
@@ -163,7 +167,7 @@ class StockTableView extends StatefulWidget {
 
   StockTableView({
     @required this.delegate,
-    this.metrics = const StockTableMetrics()
+    this.metrics = const StockTableMetrics(),
   });
 
   @override
@@ -175,7 +179,7 @@ class StockTableView extends StatefulWidget {
 class _StockTableViewState extends State<StockTableView> {
   final ScrollController _headerScrollController = ScrollController();
   final ScrollController _gridScrollController = ScrollController();
-  
+
   List<TableRow> _generateGridRows(BuildContext context) {
     return List<TableRow>.generate(widget.delegate.numRows, (index) {
       return TableRow(
@@ -223,13 +227,12 @@ class _StockTableViewState extends State<StockTableView> {
   Widget _makeBody(BuildContext context) {
     return Expanded(
       child: SingleChildScrollView(
-        child: Row (
+        child: Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
             Column(
               children: _generatePrimaryCells(context),
             ),
-
             Expanded(
               child: NotificationListener<ScrollUpdateNotification>(
                 child: SingleChildScrollView(
@@ -237,7 +240,8 @@ class _StockTableViewState extends State<StockTableView> {
                   physics: ClampingScrollPhysics(),
                   scrollDirection: Axis.horizontal,
                   child: Table(
-                    columnWidths: List<TableColumnWidth>.generate(5, (i) => FixedColumnWidth(146.0)).asMap(),
+                    columnWidths: List<TableColumnWidth>.generate(
+                        5, (i) => FixedColumnWidth(146.0)).asMap(),
                     children: _generateGridRows(context),
                   ),
                 ),
