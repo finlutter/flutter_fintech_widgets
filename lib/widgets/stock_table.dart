@@ -5,6 +5,7 @@ typedef Function StockTableDelegateOnTap(
   int rowIndex
 );
 
+// Base interface for delegation of StockTableView
 abstract class StockTableDeletgate {
   const StockTableDeletgate();
 
@@ -15,53 +16,11 @@ abstract class StockTableDeletgate {
   Widget createCell(BuildContext context, int rowIndex, int columnIndex, StockTableView tableView);
 }
 
-class DummyStockTableDelegate extends StockTableDeletgate {
-  final int numColumns;
-  final int numRows;
-
-  const DummyStockTableDelegate({
-    this.numColumns = 6,
-    this.numRows = 40
-  });
-
-  @override
-  Widget createCell(
-    BuildContext context,
-    int rowIndex,
-    int columnIndex,
-    StockTableView tableView
-  ) {
-    assert(tableView != null);
-    assert(rowIndex >= 0);
-    assert(columnIndex >= 0);
-
-    return Container(
-      height: tableView.metrics.itemHeight,
-      width: tableView.metrics.itemWidth,
-      alignment: Alignment.center,
-      color: rowIndex.isEven ? Colors.blueGrey[200] : Colors.white,
-      child: Text('$rowIndex : $columnIndex'),
-    );
-  }
-
-  @override
-  Widget createHeaderCell(
-    BuildContext context,
-    int columnIndex,
-    StockTableView tableView
-  ) {
-    assert(tableView != null);
-    assert(columnIndex >= 0);
-    return Container(
-      height: tableView.metrics.itemHeight,
-      width: tableView.metrics.itemWidth,
-      alignment: Alignment.center,
-      color: Colors.green[100 * (columnIndex % 9)],
-      child: Text('Column $columnIndex'),
-    );
-  }
-}
-
+// A more specific delegation, caller could provide a
+// list of item (key, value) and a map for key's display
+// value to feed data to stock table.
+// Additionaly, caller could also provide a callback to
+// handle tap on a row.
 class ItemListStockTableDelegate extends StockTableDeletgate {
   final List<String> _headerNames = List<String>();
   final List<String> _headerKeys = List<String>();
@@ -127,7 +86,6 @@ class ItemListStockTableDelegate extends StockTableDeletgate {
         child: Text(cellText),
       ),
       onTap: () {
-        debugPrint("Tap on row $rowIndex");
         if (onTap != null) {
           onTap(context, rowIndex);
         }
@@ -169,6 +127,8 @@ class ItemListStockTableDelegate extends StockTableDeletgate {
   int get numRows => _rows.length;
 }
 
+// To define metrics of a stock table, include size of
+// cells/header cells.
 class StockTableMetrics {
   static const double defaultHeaderHeight = 48.0;
   static const double defaultHeaderWidth = 146.0;
@@ -192,6 +152,11 @@ class StockTableMetrics {
   });
 }
 
+// A table view to display a list of stock, with some
+// detailed property values scrolling horizontaly.
+// Caller must provide a delegate to feed data.
+// This can be done by using ItemListStockTableDelegate
+// or subclass StockTableDelegate
 class StockTableView extends StatefulWidget {
   final StockTableDeletgate delegate;
   final StockTableMetrics metrics;
