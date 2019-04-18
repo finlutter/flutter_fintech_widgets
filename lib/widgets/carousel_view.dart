@@ -11,7 +11,7 @@ class _CarouselViewState extends State<CarouselView> {
   @override
   Widget build(BuildContext context) {
     return Placeholder(
-      fallbackHeight: 100,
+      fallbackHeight: 196,
     );
   }
 }
