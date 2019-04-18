@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import '../../widgets/carousel_view.dart';
 import '../../widgets/icon_board_view.dart';
-import '../../widgets/pinned_page_view.dart';
 
 class HomePage extends StatelessWidget {
   @override
@@ -17,13 +16,10 @@ class HomePage extends StatelessWidget {
                 floating: false,
                 pinned: true,
                 flexibleSpace: FlexibleSpaceBar(
-                  background: Column(
-                    children: <Widget>[
-                      CarouselView(),
-                      IconBoardView(),
-                    ]
-                  ),
-                  // title: CarouselView(),
+                  background: Column(children: <Widget>[
+                    CarouselView(),
+                    IconBoardView(),
+                  ]),
                   collapseMode: CollapseMode.none,
                 ),
                 leading: Icon(
@@ -41,7 +37,6 @@ class HomePage extends StatelessWidget {
                       color: Colors.black,
                     ),
                     decoration: InputDecoration(
-                      // border: OutlineInputBorder(),
                       prefixIcon: Icon(Icons.search),
                       hintText: "搜索点儿啥",
                       filled: true,
@@ -102,15 +97,18 @@ class HomePage extends StatelessWidget {
                   return ListTile(
                     title: Text("This is item $index"),
                     subtitle: Text("And a subtitle..."),
-                    trailing: Icon(Icons.broken_image, size: 64,),
+                    trailing: Icon(
+                      Icons.broken_image,
+                      size: 64,
+                    ),
                   );
                 },
               ),
-              Center( child: Text("Page 2")),
-              Center( child: Text("Page 3")),
-              Center( child: Text("Page 4")),
-              Center( child: Text("Page 5")),
-              Center( child: Text("Page 6")),
+              Center(child: Text("Page 2")),
+              Center(child: Text("Page 3")),
+              Center(child: Text("Page 4")),
+              Center(child: Text("Page 5")),
+              Center(child: Text("Page 6")),
             ],
           ),
         ),
@@ -118,8 +116,8 @@ class HomePage extends StatelessWidget {
     );
   }
 }
-class _SliverAppBarDelegate extends SliverPersistentHeaderDelegate {
 
+class _SliverAppBarDelegate extends SliverPersistentHeaderDelegate {
   final TabBar delegated;
 
   _SliverAppBarDelegate({@required this.delegated});
@@ -131,8 +129,11 @@ class _SliverAppBarDelegate extends SliverPersistentHeaderDelegate {
   double get maxExtent => delegated.preferredSize.height;
 
   @override
-  Widget build(BuildContext context, double shrinkOffset, bool overlapsContent) {
-    debugPrint("shrinkOffset: $shrinkOffset, overlapsContent: $overlapsContent");
+  Widget build(
+    BuildContext context,
+    double shrinkOffset,
+    bool overlapsContent,
+  ) {
     return new Container(
       color: Colors.white,
       child: delegated,
