@@ -32,7 +32,7 @@ class _MinePageState extends State<MinePage>
             child: Row(
               children: <Widget>[
                 Icon(Icons.person, size: 128),
-                Text("我的名字")
+                Text("我的名字"),
               ],
             ),
           ),
