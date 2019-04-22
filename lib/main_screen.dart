@@ -26,7 +26,7 @@ class _MainNavigationState extends State<MainNavigation>
     with SingleTickerProviderStateMixin {
   final List<Widget> _tabPages = [
     HomePage(),
-    MarketPage(),
+    MainMarketPage(),
     NewsPage(),
     MinePage()
   ];
