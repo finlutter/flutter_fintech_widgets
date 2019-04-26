@@ -7,5 +7,4 @@ class MarketAMPage extends StatelessWidget {
       child: Text("美股"),
     );
   }
-
 }

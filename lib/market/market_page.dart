@@ -21,5 +21,4 @@ class MarketPage extends StatelessWidget {
       labelStyle: TextStyle(fontSize: 16.0),
     );
   }
-
 }

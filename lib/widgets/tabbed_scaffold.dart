@@ -8,22 +8,21 @@ class TabbedScaffold extends StatefulWidget {
   final List<String> labels;
   final TextStyle labelStyle;
 
-  const TabbedScaffold({
-    Key key,
-    this.backgroundColor,
-    this.leading,
-    this.actions,
-    this.children,
-    this.labels,
-    this.labelStyle = const TextStyle(fontSize: 20.0)
-  }) : super(key: key);
-  
+  const TabbedScaffold(
+      {Key key,
+      this.backgroundColor,
+      this.leading,
+      this.actions,
+      this.children,
+      this.labels,
+      this.labelStyle = const TextStyle(fontSize: 20.0)})
+      : super(key: key);
+
   @override
   TabbedScaffoldState createState() => TabbedScaffoldState();
 }
 
 class TabbedScaffoldState extends State<TabbedScaffold> {
-
   Widget _buildTitle() {
     List<Widget> tabs = List<Widget>();
     widget.labels.forEach((tabName) {
@@ -46,11 +45,10 @@ class TabbedScaffoldState extends State<TabbedScaffold> {
       child: Scaffold(
         appBar: PreferredSize(
             child: AppBar(
-              leading: widget.leading,
-              actions: widget.actions,
-              centerTitle: true,
-              title: _buildTitle()
-            ),
+                leading: widget.leading,
+                actions: widget.actions,
+                centerTitle: true,
+                title: _buildTitle()),
             preferredSize: Size.fromHeight(48.0)),
         body: TabBarView(
           children: widget.children,

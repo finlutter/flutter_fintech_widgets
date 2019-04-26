@@ -163,7 +163,8 @@ class FavoritePage extends StatelessWidget {
             Navigator.push(
               context,
               MaterialPageRoute(
-                builder: (context) => StockViewPage("${sampleItemList[row]['symbol']}"),
+                builder: (context) =>
+                    StockViewPage("${sampleItemList[row]['symbol']}"),
               ),
             );
           },
@@ -171,5 +172,4 @@ class FavoritePage extends StatelessWidget {
       ),
     );
   }
-
 }

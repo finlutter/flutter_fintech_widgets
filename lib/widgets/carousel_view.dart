@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 
-class CarouselView extends StatefulWidget
-  implements PreferredSizeWidget {
-
+class CarouselView extends StatefulWidget implements PreferredSizeWidget {
   final double height;
   final List<Widget> children;
   final bool pageScroll;

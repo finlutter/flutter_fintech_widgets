@@ -34,5 +34,4 @@ class MarketHKPage extends StatelessWidget {
       ],
     );
   }
-
 }
