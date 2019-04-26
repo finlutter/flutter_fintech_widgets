@@ -3,6 +3,42 @@ import '../../widgets/carousel_view.dart';
 import '../../widgets/icon_board_view.dart';
 
 class HomePage extends StatelessWidget {
+  CarouselView _buildCarousel() {
+    return CarouselView(
+      height: 152.0,
+      children: [
+        Container(
+          height: 152.0,
+          child: Align(
+            alignment: Alignment.bottomCenter,
+            child: Text("Page One"),
+          ),
+        ),
+        Container(
+          height: 152.0,
+          child: Align(
+            alignment: Alignment.bottomCenter,
+            child: Text("Page Two"),
+          ),
+        ),
+        Container(
+          height: 152.0,
+          child: Align(
+            alignment: Alignment.bottomCenter,
+            child: Text("Page Three"),
+          ),
+        ),
+        Container(
+          height: 152.0,
+          child: Align(
+            alignment: Alignment.bottomCenter,
+            child: Text("Page Four"),
+          ),
+        ),
+      ],
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -16,10 +52,12 @@ class HomePage extends StatelessWidget {
                 floating: false,
                 pinned: true,
                 flexibleSpace: FlexibleSpaceBar(
-                  background: Column(children: <Widget>[
-                    CarouselView(),
-                    IconBoardView(),
-                  ]),
+                  background: Column(
+                    children: <Widget>[
+                      _buildCarousel(),
+                      IconBoardView(),
+                    ],
+                  ),
                   collapseMode: CollapseMode.none,
                 ),
                 leading: Icon(

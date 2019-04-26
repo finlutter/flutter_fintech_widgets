@@ -14,6 +14,7 @@ class _MinePageState extends State<MinePage>
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
+          centerTitle: true,
           title: Text('我的'),
           actions: <Widget>[
             IconButton(
@@ -41,7 +42,6 @@ class _MinePageState extends State<MinePage>
               size: Size.fromHeight(64.0),
               child: ListView(
                 scrollDirection: Axis.horizontal,
-                // padding: EdgeInsets.all(6.0),
                 itemExtent: 128.0,
                 children: <Widget>[
                   Container(
