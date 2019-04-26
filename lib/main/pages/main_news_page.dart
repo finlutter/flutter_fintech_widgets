@@ -15,6 +15,7 @@ class _NewsPageState extends State<NewsPage>
     return Scaffold(
       appBar: PreferredSize(
         child: AppBar(
+          centerTitle: true,
           title: Text('资讯'),
         ),
         preferredSize: Size.fromHeight(48.0),
