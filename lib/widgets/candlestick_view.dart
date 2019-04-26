@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'volume_painter.dart';
 import 'candlestick_painter.dart';
 import '../stock/model.dart';
 
@@ -52,9 +53,17 @@ class _CandleStickViewState extends State<CandleSticksView> {
         Size(double.infinity, 500),
       ),
       child: GestureDetector(
-        child: CustomPaint(
-          painter: CandleStickPainter(widget.stock, painterConfig),
-          size: widget._viewSize,
+        child: ListView(
+          children: <Widget>[
+            CustomPaint(
+              painter: CandleStickPainter(widget.stock, painterConfig),
+              size: Size(widget._viewSize.width, widget._viewSize.height * 0.7),
+            ),
+             CustomPaint(
+              painter: VolumePainter(widget.stock, painterConfig),
+              size: Size(widget._viewSize.width, widget._viewSize.height - widget._viewSize.height * 0.7),
+             ),
+          ],
         ),
 
         // onHorizontalDragStart: (DragStartDetails details) => {

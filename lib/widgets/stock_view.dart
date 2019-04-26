@@ -37,7 +37,7 @@ class _StockViewPageState extends State<StockViewPage> {
       body: _data != null && _data.items.isNotEmpty
           ? Column(
               children: <Widget>[
-                CandleSticksView(_data, Size(500, 300)),
+                CandleSticksView(_data, Size(500, 500)),
               ],
             )
           : Container(
