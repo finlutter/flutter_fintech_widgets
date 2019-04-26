@@ -18,23 +18,38 @@ class CompactStockInfo extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
-      child: InkWell(
-        child: Column(
-          children: [
-            Text(title),
-            Text(price),
-            Row(
-              children: [
-                Text(changeAmount),
-                Text(changePercentage),
-              ],
-            ),
-          ],
+      child: Container(
+        child: InkWell(
+          child: Column(
+            children: [
+              Text(
+                title,
+                style: TextStyle(fontSize: 18.0, height: 2),
+              ),
+              Text(
+                price,
+                style: TextStyle(fontSize: 16.0, height: 1.2),
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  Text(
+                    changeAmount,
+                    style: TextStyle(fontSize: 13.0),
+                  ),
+                  Text(
+                    changePercentage,
+                    style: TextStyle(fontSize: 13.0),
+                  ),
+                ],
+              ),
+            ],
+          ),
+          splashColor: Colors.blue.withAlpha(30),
+          onTap: () {
+            debugPrint("index tapped");
+          },
         ),
-        splashColor: Colors.blue.withAlpha(30),
-        onTap: () {
-          debugPrint("index tapped");
-        },
       ),
     );
   }
@@ -59,6 +74,7 @@ class CompactCategoryInfo extends StatelessWidget {
       child: Column(
         children: [
           Row(
+            mainAxisAlignment: MainAxisAlignment.end,
             children: [
               Text(title),
               Text(mainDisplayValue),
@@ -72,6 +88,9 @@ class CompactCategoryInfo extends StatelessWidget {
           ),
         ],
       ),
+      onTap: () {
+        debugPrint("Category tapped");
+      },
     );
   }
 }

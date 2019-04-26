@@ -44,6 +44,7 @@ class MarketSHSZPage extends StatelessWidget {
           child: Column(
             children: [
               Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
                   CompactCategoryInfo(
                     title: "休闲服务",
@@ -60,6 +61,7 @@ class MarketSHSZPage extends StatelessWidget {
                 ],
               ),
               Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
                   CompactCategoryInfo(
                     title: "化工",
@@ -85,6 +87,7 @@ class MarketSHSZPage extends StatelessWidget {
           child: Column(
             children: [
               Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
                   CompactCategoryInfo(
                     title: "分散染料",
@@ -101,6 +104,7 @@ class MarketSHSZPage extends StatelessWidget {
                 ],
               ),
               Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
                   CompactCategoryInfo(
                     title: "可燃冰",
