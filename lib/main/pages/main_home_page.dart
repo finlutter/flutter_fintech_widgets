@@ -3,7 +3,6 @@ import '../../widgets/carousel_view.dart';
 import '../../widgets/icon_board_view.dart';
 
 class HomePage extends StatelessWidget {
-
   CarouselView _buildCarousel() {
     return CarouselView(
       height: 152.0,
