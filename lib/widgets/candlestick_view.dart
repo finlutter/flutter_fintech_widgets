@@ -55,14 +55,22 @@ class _CandleStickViewState extends State<CandleSticksView> {
       child: GestureDetector(
         child: ListView(
           children: <Widget>[
-            CustomPaint(
-              painter: CandleStickPainter(widget.stock, painterConfig),
-              size: Size(widget._viewSize.width, widget._viewSize.height * 0.7),
+            Container(
+              margin: EdgeInsets.fromLTRB(5, 5, 5, 5),
+              child: new CustomPaint(
+                painter: CandleStickPainter(widget.stock, painterConfig),
+                size:
+                    Size(widget._viewSize.width - 10, widget._viewSize.height * 0.7),
+              ),
             ),
-             CustomPaint(
-              painter: VolumePainter(widget.stock, painterConfig),
-              size: Size(widget._viewSize.width, widget._viewSize.height - widget._viewSize.height * 0.7),
-             ),
+            Container(
+              margin: EdgeInsets.fromLTRB(5, 5, 5, 5),
+              child: new CustomPaint(
+                painter: VolumePainter(widget.stock, painterConfig),
+                size: Size(widget._viewSize.width - 10,
+                    widget._viewSize.height * (1 - 0.7) - 20),
+              ),
+            ),
           ],
         ),
 

@@ -10,6 +10,18 @@ class VolumePainter extends CustomPainter {
 
   @override
   void paint(Canvas canvas, Size size) {
+      // draw frame
+    Paint framePaint = Paint();
+    framePaint.color = Colors.grey;
+    framePaint.strokeWidth = 1.5;
+    canvas.drawLine(new Offset(0, 0), new Offset(size.width, 0), framePaint);
+    canvas.drawLine(new Offset(size.width, 0), new Offset(size.width, size.height), framePaint);
+    canvas.drawLine(new Offset(size.width, size.height), new Offset(0, size.height), framePaint);
+    canvas.drawLine(new Offset(0, size.height), new Offset(0, 0), framePaint);
+
+// draw separator
+    canvas.drawLine(new Offset(0, size.height / 2), new Offset(size.width, size.height / 2), framePaint);
+
     // calculate which is the first and last item to draw.
     double extendWidth = _config.candleWidth + _config.candleMargin * 2;
     int start =
