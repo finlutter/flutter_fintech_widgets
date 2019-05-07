@@ -5,6 +5,7 @@ import 'candlestick_painter.dart';
 class VolumePainter extends CustomPainter {
   Stock _data;
   CandleSticksPainterConfig _config;
+  List<TextPainter> gridLineTextPainters = [];
 
   VolumePainter(this._data, this._config);
 
@@ -83,6 +84,51 @@ class VolumePainter extends CustomPainter {
       }
       canvas.drawRect(itemRect, paint);
     }
+
+    // darw text
+      double gridLineValue;
+      int gridLineAmount = 3; // TODO config
+      double width = size.width;
+      final double height = size.height;
+      double gridLineDist = height / (gridLineAmount - 1);
+      double gridLineY;
+      for (int i = 0; i < gridLineAmount; i++) {
+        // Label grid lines
+        gridLineValue = highestVolume -
+            ((highestVolume / (gridLineAmount - 1)) * i);
+
+        String gridLineText;
+        if (gridLineValue < 1) {
+          gridLineText = gridLineValue.toStringAsPrecision(4);
+        } else if (gridLineValue < 999) {
+          gridLineText = gridLineValue.toStringAsFixed(2);
+        } else {
+          gridLineText = gridLineValue.round().toString().replaceAllMapped(
+              new RegExp(r'(\d{1,3})(?=(\d{3})+(?!\d))'),
+              (Match m) => "${m[1]},");
+        }
+
+        gridLineTextPainters.add(new TextPainter(
+            text: new TextSpan(
+                text: gridLineText,
+                style: new TextStyle(
+                    color: Colors.grey,
+                    fontSize: 10.0,
+                    fontWeight: FontWeight.bold)),
+            textDirection: TextDirection.ltr));
+        gridLineTextPainters[i].layout();
+        gridLineY = (gridLineDist * i).round().toDouble();
+        if (i == 0){
+          gridLineY += 6;
+        }else if (i == gridLineAmount - 1){
+          gridLineY -= 6;
+        }
+        width = size.width - gridLineTextPainters[i].text.text.length * 6;
+
+        // Label grid lines
+        gridLineTextPainters[i]
+            .paint(canvas, new Offset(width + 2.0, gridLineY - 6.0));
+      }
   }
 
   @override

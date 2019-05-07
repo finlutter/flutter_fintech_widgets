@@ -39,24 +39,28 @@ class CandleSticksPainterConfig {
 class CandleStickPainter extends CustomPainter {
   Stock _data;
   CandleSticksPainterConfig _config;
+  List<TextPainter> gridLineTextPainters = [];
 
   CandleStickPainter(this._data, this._config);
 
   @override
   void paint(Canvas canvas, Size size) {
-
-  // draw frame
+    // draw frame
     Paint framePaint = Paint();
     framePaint.color = Colors.grey;
     framePaint.strokeWidth = 1.5;
     canvas.drawLine(new Offset(0, 0), new Offset(size.width, 0), framePaint);
-    canvas.drawLine(new Offset(size.width, 0), new Offset(size.width, size.height), framePaint);
-    canvas.drawLine(new Offset(size.width, size.height), new Offset(0, size.height), framePaint);
+    canvas.drawLine(new Offset(size.width, 0),
+        new Offset(size.width, size.height), framePaint);
+    canvas.drawLine(new Offset(size.width, size.height),
+        new Offset(0, size.height), framePaint);
     canvas.drawLine(new Offset(0, size.height), new Offset(0, 0), framePaint);
 
 // draw separator
-    canvas.drawLine(new Offset(0, size.height / 3), new Offset(size.width, size.height / 3), framePaint);
-    canvas.drawLine(new Offset(0, size.height * 2 / 3), new Offset(size.width, size.height * 2 / 3), framePaint);
+    canvas.drawLine(new Offset(0, size.height / 3),
+        new Offset(size.width, size.height / 3), framePaint);
+    canvas.drawLine(new Offset(0, size.height * 2 / 3),
+        new Offset(size.width, size.height * 2 / 3), framePaint);
 
     // calculate which is the first and last item to draw.
     double extendWidth = _config.candleWidth + _config.candleMargin * 2;
@@ -136,6 +140,52 @@ class CandleStickPainter extends CustomPainter {
 
         canvas.drawLine(lineStart, lineEnd, paint);
       }
+
+      // darw text
+      double gridLineValue;
+      int gridLineAmount = 4; // TODO config
+      double width = size.width;
+      final double height = size.height;
+      double gridLineDist = height / (gridLineAmount - 1);
+      double gridLineY;
+      for (int i = 0; i < gridLineAmount; i++) {
+        // Label grid lines
+        gridLineValue = highestPrice -
+            (((highestPrice - lowestPrice) / (gridLineAmount - 1)) * i);
+
+        String gridLineText;
+        if (gridLineValue < 1) {
+          gridLineText = gridLineValue.toStringAsPrecision(4);
+        } else if (gridLineValue < 999) {
+          gridLineText = gridLineValue.toStringAsFixed(2);
+        } else {
+          gridLineText = gridLineValue.round().toString().replaceAllMapped(
+              new RegExp(r'(\d{1,3})(?=(\d{3})+(?!\d))'),
+              (Match m) => "${m[1]},");
+        }
+
+        gridLineTextPainters.add(new TextPainter(
+            text: new TextSpan(
+                text: gridLineText,
+                style: new TextStyle(
+                    color: Colors.grey,
+                    fontSize: 10.0,
+                    fontWeight: FontWeight.bold)),
+            textDirection: TextDirection.ltr));
+        gridLineTextPainters[i].layout();
+        gridLineY = (gridLineDist * i).round().toDouble();
+        if (i == 0){
+          gridLineY += 6;
+        }else if (i == gridLineAmount - 1){
+          gridLineY -= 6;
+        }
+        width = size.width - gridLineTextPainters[i].text.text.length * 6;
+
+        // Label grid lines
+        gridLineTextPainters[i]
+            .paint(canvas, new Offset(width + 2.0, gridLineY - 6.0));
+      }
+
     }
   }
 
