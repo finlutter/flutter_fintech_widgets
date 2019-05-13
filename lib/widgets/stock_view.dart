@@ -30,6 +30,7 @@ class _StockViewPageState extends State<StockViewPage> {
 
   @override
   Widget build(BuildContext context) {
+        final size = MediaQuery.of(context).size;
     return Scaffold(
       appBar: AppBar(
         title: Text(_data != null ? _data.symbol : ''),
@@ -37,7 +38,7 @@ class _StockViewPageState extends State<StockViewPage> {
       body: _data != null && _data.items.isNotEmpty
           ? Column(
               children: <Widget>[
-                CandleSticksView(_data, Size(500, 500)),
+                CandleSticksView(_data, Size(size.width, 500)),
               ],
             )
           : Container(

@@ -18,15 +18,27 @@ class CandleSticksView extends StatefulWidget {
 class _CandleStickViewState extends State<CandleSticksView> {
   CandleSticksPainterConfig painterConfig = CandleSticksPainterConfig();
 
+  double leftMargin = 5;
+  double rightMargin = 5;
+
   double virtualWidth;
 
   @override
   void initState() {
     super.initState();
-
+// 直接使用widget._viewSize.width，不能反映屏幕的真实宽度？？？
     virtualWidth =
         (painterConfig.candleWidth + painterConfig.candleMargin * 2) *
             widget.stock.items.length;
+      double newOffset = virtualWidth - (widget._viewSize.width - leftMargin - rightMargin) - painterConfig.candleMargin;;
+      if (newOffset < 0) {
+        newOffset = 0;
+      }
+
+      if (newOffset > virtualWidth - (widget._viewSize.width - leftMargin - rightMargin)) {
+        newOffset = virtualWidth - (widget._viewSize.width - leftMargin - rightMargin);
+      }
+    painterConfig.viewOffset = newOffset;
   }
 
   void onDragUpdate(double offset) {
@@ -38,8 +50,8 @@ class _CandleStickViewState extends State<CandleSticksView> {
         newOffset = 0;
       }
 
-      if (newOffset > virtualWidth - widget._viewSize.width) {
-        newOffset = virtualWidth - widget._viewSize.width;
+      if (newOffset > virtualWidth - (widget._viewSize.width - leftMargin - rightMargin)) {
+        newOffset = virtualWidth - (widget._viewSize.width - leftMargin - rightMargin);
       }
 
       painterConfig.viewOffset = newOffset;
@@ -56,18 +68,18 @@ class _CandleStickViewState extends State<CandleSticksView> {
         child: ListView(
           children: <Widget>[
             Container(
-              margin: EdgeInsets.fromLTRB(5, 5, 5, 5),
+              margin: EdgeInsets.fromLTRB(leftMargin, 5, rightMargin, 5),
               child: new CustomPaint(
                 painter: CandleStickPainter(widget.stock, painterConfig),
                 size:
-                    Size(widget._viewSize.width - 10, widget._viewSize.height * 0.7),
+                    Size(widget._viewSize.width - leftMargin - rightMargin, widget._viewSize.height * 0.7),
               ),
             ),
             Container(
-              margin: EdgeInsets.fromLTRB(5, 5, 5, 5),
+              margin: EdgeInsets.fromLTRB(leftMargin, 5, rightMargin, 5),
               child: new CustomPaint(
                 painter: VolumePainter(widget.stock, painterConfig),
-                size: Size(widget._viewSize.width - 10,
+                size: Size(widget._viewSize.width - leftMargin -rightMargin,
                     widget._viewSize.height * (1 - 0.7) - 20),
               ),
             ),
